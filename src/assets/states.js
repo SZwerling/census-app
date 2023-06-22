@@ -40,7 +40,7 @@ let statesArr = [
    { state: "PENNSYLVANIA", code: "42" },
    { state: "RHODE ISLAND", code: "44" },
    { state: "SOUTH CAROLINA", code: "45" },
-   { state: "SOUTH DAKOTA", "code ": "46" },
+   { state: "SOUTH DAKOTA", code: "46" },
    { state: "TENNESSEE", code: "47" },
    { state: "TEXAS", code: "48" },
    { state: "UTAH", code: "49" },
