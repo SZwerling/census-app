@@ -48,22 +48,26 @@ function AutoComplete({ runTenTimes }) {
       <>
          <div className="col-6">
             <div className="dropdown">
+           
                <input
                   className="dropdown-toggle"
-                  id="countyInput"
+                  data-bs-toggle="dropdown"
                   onChange={(e) => setCounty(e.target.value)}
                   value={county}
                   type="text"
+                  id="countyInput"
                   aria-label="county-name-input"
                   placeholder="county"
                   autoComplete="off"
-               />
+               />   
+           
                <ul
                   aria-labelledby="countyInput"
                   className={`dropdown-menu ${county.length > 3 ? "show" : ""}`}
                >
                   {renderedFilteredCounties}
                </ul>
+            
             </div>
          </div>
       </>

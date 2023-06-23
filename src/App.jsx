@@ -99,8 +99,8 @@ function App() {
             </div>
             <div className="row align-items-center">
                <div className="col-8">
-                  {/* <LineChart chartData={chartData} /> */}
-                  <BarChart chartData={chartData} />
+                  <LineChart chartData={chartData} />
+                  {/* <BarChart chartData={chartData} /> */}
                </div>
             </div>
          </div>
