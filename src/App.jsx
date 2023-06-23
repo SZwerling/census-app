@@ -9,7 +9,6 @@ import { BarChart } from "./BarChart";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 
-
 Chart.register(CategoryScale);
 
 const years = [2015, 2016, 2017, 2018, 2019, 2020, 2021];
@@ -36,7 +35,7 @@ function App() {
       ],
    });
 
-   const runTenTimes = async (county=(169), state=(20)) => {
+   const runTenTimes = async (county = 169, state = 20) => {
       setLoading(true);
 
       let arrOfData = [];
@@ -47,7 +46,7 @@ function App() {
             );
          })
       );
-     
+
       responses.map((response) => {
          arrOfData.push({
             id: response.data[1][0],
@@ -79,23 +78,26 @@ function App() {
       setLoading(false);
    };
 
-   
    return (
       <>
          <div className="container">
-          
             <div className="row">
-               <div className="col"><h1>{location}</h1></div>
+               {loading ? (
+                  <div className="col placeholder-glow">
+                     <h1>
+                        <span class="placeholder col-6" aria-hidden="true"></span>
+                     </h1>
+                  </div>
+               ) : (
+                  <div className="col">
+                     <h1>{location}</h1>
+                  </div>
+               )}
             </div>
             <div className="row">
-                  <AutoComplete runTenTimes={runTenTimes}/>
+               <AutoComplete runTenTimes={runTenTimes} />
             </div>
             <div className="row align-items-center">
-               <div className="col-1">
-             
-                     {loading ?    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>: ""}
-           
-               </div>
                <div className="col-8">
                   {/* <LineChart chartData={chartData} /> */}
                   <BarChart chartData={chartData} />
@@ -109,5 +111,3 @@ function App() {
 export default App;
 
 //https://api.census.gov/data/1987/cbp?get=EMP&for=county:075&in=state:06
-
-
