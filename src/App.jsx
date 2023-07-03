@@ -14,6 +14,7 @@ Chart.register(CategoryScale);
 const years = [2015, 2016, 2017, 2018, 2019, 2020, 2021];
 
 function App() {
+   //state to update to use recharts
    const [loading, setLoading] = useState(false);
    const [location, setLocation] = useState("");
    const [chartData, setChartData] = useState({
@@ -36,8 +37,9 @@ function App() {
    });
 
    const runTenTimes = async (county = 169, state = 20) => {
+      //and then update arr of obj's to use recharts
       setLoading(true);
-
+   
       let arrOfData = [];
       const responses = await Promise.all(
          years.map((year) => {
@@ -46,7 +48,7 @@ function App() {
             );
          })
       );
-
+         console.log(responses)
       responses.map((response) => {
          arrOfData.push({
             id: response.data[1][0],
