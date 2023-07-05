@@ -1,27 +1,37 @@
-// components/LineChart.js
+
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 
-function LineChart({ chartData }) {
+
+function LChart({data, location}) {
+
+  const colors = ["black", "blue", "green"]
+
+  const renderedLines = location.map((location, i) => {
+    return <Line key={location} type="monotone" dataKey={location} stroke={colors[i]} />
+  })
+
+
   return (
-    <div className="chart-container">
-      <h2 style={{ textAlign: "center" }}>Number of Employed</h2>
-      <Line
-        data={chartData}
-        options={{
-          plugins: {
-            title: {
-              display: true,
-              text: "U.S Employment"
-            },
-            legend: {
-              display: false
-            }
-          }
+      <LineChart
+        width={600}
+        height={500}
+        data={data}
+        margin={{
+          top: 5,
+          right: 10,
+          left: 10,
+          bottom: 5,
         }}
-      />
-    </div>
+      >
+        <CartesianGrid strokeDasharray="2 2" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        {renderedLines}
+      </LineChart>
   );
 }
-export default LineChart;
+export default LChart;

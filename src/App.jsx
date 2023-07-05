@@ -1,15 +1,12 @@
 import fetchInfo from "./API/axios";
 import { useState } from "react";
-import Chart from "chart.js/auto";
-import { CategoryScale } from "chart.js";
+
 import AutoComplete from "./AutoComplete";
 
-import LineChart from "./LineChart";
-import { BarChart } from "./BarChart";
+import LChart from "./LineChart";
+
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
-
-Chart.register(CategoryScale);
 
 const years = [2015, 2016, 2017, 2018, 2019, 2020, 2021];
 
@@ -17,30 +14,21 @@ function App() {
    //state to update to use recharts
    const [loading, setLoading] = useState(false);
    const [location, setLocation] = useState("");
-   const [chartData, setChartData] = useState({
-      labels: null,
-      datasets: [
-         {
-            label: "employed",
-            data: null,
-            backgroundColor: [
-               "rgba(75,192,192,1)",
-               "&quot;#ecf0f1",
-               "#50AF95",
-               "#f3ba2f",
-               "#2a71d0",
-            ],
-            borderColor: "black",
-            borderWidth: 2,
-         },
-      ],
-   });
+   const [empData, setEmpData] = useState([
+      { name: 2015 },
+      { name: 2016 },
+      { name: 2017 },
+      { name: 2018 },
+      { name: 2019 },
+      { name: 2020 },
+      { name: 2021 },
+   ]);
+   const [locData, setLocData] = useState([]);
 
    const runTenTimes = async (county = 169, state = 20) => {
       //and then update arr of obj's to use recharts
       setLoading(true);
-   
-      let arrOfData = [];
+
       const responses = await Promise.all(
          years.map((year) => {
             return fetchInfo.get(
@@ -48,37 +36,25 @@ function App() {
             );
          })
       );
-         console.log(responses)
-      responses.map((response) => {
-         arrOfData.push({
-            id: response.data[1][0],
-            location: response.data[1][1],
-            year: response.data[1][0],
-            employed: response.data[1][2],
-         });
-      });
 
-      setLocation(responses[0].data[1][1]);
-      setChartData({
-         labels: arrOfData.map((data) => data.year),
-         datasets: [
-            {
-               label: "employed",
-               data: arrOfData.map((data) => data.employed),
-               backgroundColor: [
-                  "rgba(75,192,192,1)",
-                  "&quot;#ecf0f1",
-                  "#50AF95",
-                  "#f3ba2f",
-                  "#2a71d0",
-               ],
-               borderColor: "black",
-               borderWidth: 2,
-            },
-         ],
-      });
+      setLocData((locData) => [
+         ...locData,
+         responses[0]?.data[1][1].replace(/[, ]+/g, ""),
+      ]);
+      //response.data[1][1] is name response.data[1][1[2]]  is employment number
+      let update = [];
+      for (let i = 0; i < empData.length; i++) {
+         let site = responses[i].data[1][1].replace(/[, ]+/g, "");
+         update.push(empData[i]);
+         update[i][site] = responses[i].data[1][2];
+         setEmpData(update);
+      }
+      setLocation("fresno");
+
       setLoading(false);
    };
+
+
 
    return (
       <>
@@ -87,22 +63,24 @@ function App() {
                {loading ? (
                   <div className="col placeholder-glow">
                      <h1>
-                        <span class="placeholder col-6" aria-hidden="true"></span>
+                        <span
+                           className="placeholder col-6"
+                           aria-hidden="true"
+                        ></span>
                      </h1>
                   </div>
                ) : (
                   <div className="col">
-                     <h1>{location}</h1>
+                     <h1>{locData[locData.length-1]}</h1>
                   </div>
                )}
             </div>
             <div className="row">
                <AutoComplete runTenTimes={runTenTimes} />
             </div>
-            <div className="row align-items-center">
-               <div className="col-8">
-                  <LineChart chartData={chartData} />
-                  {/* <BarChart chartData={chartData} /> */}
+            <div className="row">
+               <div className="col">
+                  <LChart data={empData} location={locData} />
                </div>
             </div>
          </div>

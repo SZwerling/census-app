@@ -46,7 +46,7 @@ function AutoComplete({ runTenTimes }) {
 
    return (
       <>
-         <div className="col-6">
+         <div className="col-6 my-3">
             <div className="dropdown">
            
                <input
