@@ -6,17 +6,17 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'r
 
 function LChart({data, location}) {
 
-  const colors = ["black", "blue", "green"]
+  const colors = ["black", "blue", "green", "red", "purple", "orange", "yellow"]
 
   const renderedLines = location.map((location, i) => {
-    return <Line key={location} type="monotone" dataKey={location} stroke={colors[i]} />
+    return <Line key={location} type="monotone" dataKey={location} stroke={colors[i] || "#000"} />
   })
 
 
   return (
       <LineChart
-        width={600}
-        height={500}
+        width={1000}
+        height={600}
         data={data}
         margin={{
           top: 5,
@@ -27,7 +27,7 @@ function LChart({data, location}) {
       >
         <CartesianGrid strokeDasharray="2 2" />
         <XAxis dataKey="name" />
-        <YAxis />
+        <YAxis type="number" domain={['dataMin - 100', 'dataMax + 100']} />
         <Tooltip />
         <Legend />
         {renderedLines}

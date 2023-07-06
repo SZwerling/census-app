@@ -4,8 +4,6 @@ import statesArr from "./assets/states"
 
 
 
-
-
 function AutoComplete({ runTenTimes }) {
    const [county, setCounty] = useState("");
    
@@ -17,7 +15,6 @@ function AutoComplete({ runTenTimes }) {
       runTenTimes(countyCode, stateCode);
    };
 
-   
    
 
    let renderedFilteredCounties = "";
@@ -50,8 +47,8 @@ function AutoComplete({ runTenTimes }) {
             <div className="dropdown">
            
                <input
-                  className="dropdown-toggle"
-                  data-bs-toggle="dropdown"
+                  className="form-control"
+                  // data-bs-toggle="dropdown"
                   onChange={(e) => setCounty(e.target.value)}
                   value={county}
                   type="text"

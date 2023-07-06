@@ -41,6 +41,7 @@ function App() {
          ...locData,
          responses[0]?.data[1][1].replace(/[, ]+/g, ""),
       ]);
+      setLocation(responses[0]?.data[1][1])
       //response.data[1][1] is name response.data[1][1[2]]  is employment number
       let update = [];
       for (let i = 0; i < empData.length; i++) {
@@ -49,7 +50,7 @@ function App() {
          update[i][site] = responses[i].data[1][2];
          setEmpData(update);
       }
-      setLocation("fresno");
+   
 
       setLoading(false);
    };
@@ -71,7 +72,7 @@ function App() {
                   </div>
                ) : (
                   <div className="col">
-                     <h1>{locData[locData.length-1]}</h1>
+                     <h1>{location}</h1>
                   </div>
                )}
             </div>
