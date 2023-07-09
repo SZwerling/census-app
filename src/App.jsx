@@ -1,10 +1,7 @@
 import fetchInfo from "./API/axios";
 import { useState } from "react";
-
 import AutoComplete from "./AutoComplete";
-
 import LChart from "./LineChart";
-
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 
